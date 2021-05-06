@@ -136,7 +136,7 @@
 }
 .nav li {
   display: inline-block;
-  margin-left: 0.15em;
-  margin-right: 0.15em;
+  margin-left: 0.1em;
+  margin-right: 0.1em;
   justify-content: center;
 }
