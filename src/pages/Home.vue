@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen bg-white">
+  <div class="bg-white">
     <div class="max-w-7xl mx-auto px-6 pt-8">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
         <!-- Picture Section - Left 1/3 -->
