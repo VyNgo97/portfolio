@@ -57,3 +57,13 @@ const renderedContent = computed(() => {
   return marked(post.value.content)
 })
 </script>
+
+<style scoped>
+.prose :deep(p) {
+  text-indent: 2rem;
+}
+
+.prose :deep(p:first-of-type) {
+  text-indent: 0;
+}
+</style>
