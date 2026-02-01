@@ -4,6 +4,7 @@ export interface BlogPost {
   date: string
   tags: string[]
   preview: string
+  ready: boolean
   content: string
 }
 
@@ -38,19 +39,27 @@ const markdownFiles = import.meta.glob('../content/blog/*.md', {
 })
 
 // Parse markdown files and extract metadata
-export const blogPosts: BlogPost[] = Object.entries(markdownFiles).map(([path, content]) => {
-  const { data, content: markdownContent } = parseFrontmatter(content as string)
-  const slug = path.split('/').pop()?.replace('.md', '') || ''
+export const blogPosts: BlogPost[] = Object.entries(markdownFiles)
+  .map(([path, content]) => {
+    const { data, content: markdownContent } = parseFrontmatter(content as string)
+    const slug = path.split('/').pop()?.replace('.md', '') || ''
 
-  return {
-    slug,
-    title: data.title,
-    date: data.date,
-    tags: data.tags ? data.tags.split(',').map(tag => tag.trim()) : [],
-    preview: data.preview,
-    content: markdownContent
-  }
-}).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    if (data.ready === 'false') {
+      return null
+    }
+
+    return {
+      slug,
+      title: data.title,
+      date: data.date,
+      tags: data.tags ? data.tags.split(',').map(tag => tag.trim()) : [],
+      preview: data.preview,
+      ready: data.ready !== 'false',
+      content: markdownContent
+    }
+  })
+  .filter((post): post is BlogPost => post !== null)
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
 export const getBlogPostBySlug = (slug: string): BlogPost | undefined => {
   return blogPosts.find(post => post.slug === slug)
