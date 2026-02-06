@@ -45,11 +45,59 @@
         </button>
       </div>
 
-      <!-- Success message -->
-      <div v-if="accepted" class="mt-12">
-        <p class="text-4xl text-pink-600 cute-font animate-pulse">🎉 Yay! 🎉</p>
-      </div>
     </div>
+
+    <!-- Date Itinerary Modal -->
+    <Transition name="modal">
+      <div v-if="accepted" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-30">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 transform animate-slideUp border-4 border-pink-300">
+          <div class="text-center mb-6">
+            <h2 class="text-4xl font-bold text-pink-600 cute-font mb-2">🎉 Yay! 🎉</h2>
+            <p class="text-2xl text-pink-500 cute-font">It's a Date!</p>
+          </div>
+
+          <div class="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-6 space-y-4">
+            <div class="flex items-center space-x-4">
+              <div class="text-4xl">📅</div>
+              <div>
+                <p class="text-lg font-semibold text-gray-800">February 14th, 2026</p>
+                <p class="text-sm text-gray-600">Valentine's Day</p>
+              </div>
+            </div>
+
+            <div class="border-t-2 border-pink-200 pt-4 space-y-3">
+              <div class="flex items-center space-x-4">
+                <div class="text-3xl">🎬</div>
+                <div>
+                  <p class="text-lg font-semibold text-gray-800">Movie Time</p>
+                  <p class="text-pink-600 font-medium">3:30 PM</p>
+                </div>
+              </div>
+
+              <div class="flex items-center space-x-4">
+                <div class="text-3xl">🍽️</div>
+                <div>
+                  <p class="text-lg font-semibold text-gray-800">Dinner Date</p>
+                  <p class="text-pink-600 font-medium">6:30 PM</p>
+                </div>
+              </div>
+
+              <div class="flex items-center space-x-4">
+                <div class="text-3xl">🎁</div>
+                <div>
+                  <p class="text-lg font-semibold text-gray-800">Gift Time</p>
+                  <p class="text-pink-600 font-medium">9:00 PM</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 text-center">
+            <p class="text-gray-600 cute-font text-lg">Can't wait to spend the day with you! 💕</p>
+          </div>
+        </div>
+      </div>
+    </Transition>
 
     <!-- Hearts and Fireworks -->
     <div v-if="accepted" class="fixed inset-0 pointer-events-none overflow-hidden">
@@ -245,5 +293,39 @@ const moveNoButton = (event: MouseEvent | TouchEvent) => {
     transform: translate(150px, 0) scale(0);
     opacity: 0;
   }
+}
+
+/* Modal animations */
+.modal-enter-active {
+  transition: all 0.4s ease-out;
+}
+
+.modal-leave-active {
+  transition: all 0.3s ease-in;
+}
+
+.modal-enter-from {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.modal-leave-to {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.5s ease-out;
 }
 </style>
