@@ -32,8 +32,39 @@
       </div>
 
       <!-- Success message -->
-      <div v-if="accepted" class="mt-12 animate-bounce">
-        <p class="text-4xl text-pink-600 cute-font">🎉 Yay! I'm so happy! 🎉</p>
+      <div v-if="accepted" class="mt-12">
+        <p class="text-4xl text-pink-600 cute-font animate-pulse">🎉 Yay! 🎉</p>
+      </div>
+    </div>
+
+    <!-- Hearts and Fireworks -->
+    <div v-if="accepted" class="fixed inset-0 pointer-events-none overflow-hidden">
+      <!-- Floating Hearts -->
+      <div
+        v-for="heart in hearts"
+        :key="heart.id"
+        :style="{
+          left: heart.x + '%',
+          animationDelay: heart.delay + 's',
+          fontSize: heart.size + 'px'
+        }"
+        class="heart"
+      >
+        {{ heart.emoji }}
+      </div>
+
+      <!-- Fireworks -->
+      <div
+        v-for="firework in fireworks"
+        :key="firework.id"
+        :style="{
+          left: firework.x + '%',
+          top: firework.y + '%',
+          animationDelay: firework.delay + 's'
+        }"
+        class="firework"
+      >
+        <div v-for="i in 12" :key="i" class="firework-particle" :style="{ transform: `rotate(${i * 30}deg)` }"></div>
       </div>
     </div>
   </div>
@@ -45,6 +76,10 @@ import { ref, onMounted } from 'vue'
 const noButton = ref<HTMLButtonElement | null>(null)
 const accepted = ref(false)
 const noButtonPosition = ref({ x: 0, y: 0 })
+const hearts = ref<Array<{ id: number; x: number; delay: number; size: number; emoji: string }>>([])
+const fireworks = ref<Array<{ id: number; x: number; y: number; delay: number }>>([])
+
+const heartEmojis = ['❤️', '💕', '💖', '💗', '💓', '💝', '💞', '💘']
 
 onMounted(() => {
   // Initialize "No" button position
@@ -59,7 +94,27 @@ onMounted(() => {
 
 const handleYes = () => {
   accepted.value = true
-  // Add confetti or celebration effect here if desired
+
+  // Generate floating hearts
+  for (let i = 0; i < 30; i++) {
+    hearts.value.push({
+      id: i,
+      x: Math.random() * 100,
+      delay: Math.random() * 2,
+      size: 30 + Math.random() * 40,
+      emoji: heartEmojis[Math.floor(Math.random() * heartEmojis.length)]
+    })
+  }
+
+  // Generate fireworks
+  for (let i = 0; i < 8; i++) {
+    fireworks.value.push({
+      id: i,
+      x: 20 + Math.random() * 60,
+      y: 20 + Math.random() * 60,
+      delay: i * 0.3
+    })
+  }
 }
 
 const moveNoButton = (event: MouseEvent | TouchEvent) => {
@@ -113,6 +168,68 @@ const moveNoButton = (event: MouseEvent | TouchEvent) => {
   }
   50% {
     transform: scale(1.05);
+  }
+}
+
+.heart {
+  position: absolute;
+  bottom: -50px;
+  animation: floatUp 4s ease-in forwards;
+  opacity: 0;
+}
+
+@keyframes floatUp {
+  0% {
+    bottom: -50px;
+    opacity: 0;
+    transform: translateX(0) rotate(0deg);
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    bottom: 110vh;
+    opacity: 0;
+    transform: translateX(calc(var(--float-x, 0) * 1px)) rotate(360deg);
+  }
+}
+
+.firework {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  animation: fireworkFade 1.5s ease-out forwards;
+}
+
+@keyframes fireworkFade {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.firework-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: linear-gradient(45deg, #ff6b9d, #feca57, #48dbfb, #ff9ff3);
+  border-radius: 50%;
+  animation: explode 1.5s ease-out forwards;
+}
+
+@keyframes explode {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(150px, 0) scale(0);
+    opacity: 0;
   }
 }
 </style>
