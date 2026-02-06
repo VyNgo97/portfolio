@@ -1,8 +1,9 @@
 ---
 title: A Reflection on The Last Question
-date: 2026-01-18
+date: 2026-01-17
 tags: review, philosophy, religion
 preview: A reflection on people and religion after reading Isaac Asimov's famed short story "The Last Question"
+ready: true
 ---
 *I want to preface by stating that this is not a review. I am an easily satisfied person, and if your writing makes me think, smile, or scoff, I will have enjoyed it.*
 
