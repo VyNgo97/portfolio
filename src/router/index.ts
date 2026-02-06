@@ -17,6 +17,11 @@ const routes: RouteRecordRaw[] = [
     name: 'BlogPost',
     component: () => import('../pages/BlogPost.vue')
   },
+  {
+    path: '/will-you-be-my-valentine',
+    name: 'Valentine',
+    component: () => import('../pages/Valentine.vue')
+  },
 ]
 
 const router = createRouter({
