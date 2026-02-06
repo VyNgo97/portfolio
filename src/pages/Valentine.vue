@@ -3,7 +3,11 @@
     <div class="text-center">
       <!-- Chibi animation -->
       <div class="mb-8 animate-bounce">
-        <div class="text-9xl">💝</div>
+        <img
+          src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2I5NjAxZGp2YmwyN2sydDk2eDN5Mno1ZGQwZHpybTNmMTQ1bXkzaiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/P1MnbeB71smnraT2tX/giphy.gif"
+          alt="Cute heart"
+          class="w-48 h-48 mx-auto object-contain"
+        />
       </div>
 
       <!-- Question text -->
@@ -15,9 +19,14 @@
       <div class="flex gap-8 justify-center items-center h-32">
         <button
           @click="handleYes"
-          class="px-8 py-4 bg-pink-500 hover:bg-pink-600 text-white text-2xl font-bold rounded-full shadow-lg transform hover:scale-110 transition-all duration-200 cute-font z-10"
+          class="relative px-8 py-4 bg-pink-500 hover:bg-pink-600 text-white text-2xl font-bold rounded-full shadow-lg transform hover:scale-110 transition-all duration-200 cute-font z-10 overflow-hidden"
         >
-          Yes! 💕
+          <img
+            src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ0bjYzZmd5em9nNXF6NXd5aHMzM3NpYW5haW5wOXdvcTM0NGVhaTZ5dSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/fc6wlH8khFg0uKA2Nm/giphy.gif"
+            alt="Yes"
+            class="absolute inset-0 w-full h-full object-cover opacity-30"
+          />
+          <span class="relative z-10">Yes! 💕</span>
         </button>
 
         <button
@@ -25,9 +34,14 @@
           @mouseenter="moveNoButton"
           @touchstart="moveNoButton"
           :style="{ position: 'fixed', left: noButtonPosition.x + 'px', top: noButtonPosition.y + 'px', transition: 'all 0.3s ease' }"
-          class="px-8 py-4 bg-gray-400 hover:bg-gray-500 text-white text-2xl font-bold rounded-full shadow-lg cute-font z-10"
+          class="relative px-8 py-4 bg-gray-400 hover:bg-gray-500 text-white text-2xl font-bold rounded-full shadow-lg cute-font z-10 overflow-hidden"
         >
-          No 😢
+          <img
+            src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2I5NjAxZGp2YmwyN2sydDk2eDN5Mno1ZGQwZHpybTNmMTQ1bXkzaiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Bc4oup2pdP5iKFAYiF/giphy.gif"
+            alt="No"
+            class="absolute inset-0 w-full h-full object-cover opacity-30"
+          />
+          <span class="relative z-10">No 😢</span>
         </button>
       </div>
 
