@@ -12,20 +12,20 @@
       </h1>
 
       <!-- Buttons -->
-      <div class="flex gap-8 justify-center items-center relative h-32">
+      <div class="flex gap-8 justify-center items-center h-32">
         <button
           @click="handleYes"
-          class="px-8 py-4 bg-pink-500 hover:bg-pink-600 text-white text-2xl font-bold rounded-full shadow-lg transform hover:scale-110 transition-all duration-200 cute-font"
+          class="px-8 py-4 bg-pink-500 hover:bg-pink-600 text-white text-2xl font-bold rounded-full shadow-lg transform hover:scale-110 transition-all duration-200 cute-font z-10"
         >
           Yes! 💕
         </button>
 
         <button
           ref="noButton"
-          @mousemove="moveNoButton"
+          @mouseenter="moveNoButton"
           @touchstart="moveNoButton"
-          :style="{ position: 'absolute', left: noButtonPosition.x + 'px', top: noButtonPosition.y + 'px' }"
-          class="px-8 py-4 bg-gray-400 hover:bg-gray-500 text-white text-2xl font-bold rounded-full shadow-lg transition-colors duration-200 cute-font"
+          :style="{ position: 'fixed', left: noButtonPosition.x + 'px', top: noButtonPosition.y + 'px', transition: 'all 0.3s ease' }"
+          class="px-8 py-4 bg-gray-400 hover:bg-gray-500 text-white text-2xl font-bold rounded-full shadow-lg cute-font z-10"
         >
           No 😢
         </button>
@@ -68,45 +68,26 @@ const moveNoButton = (event: MouseEvent | TouchEvent) => {
   const button = noButton.value
   if (!button) return
 
-  // Get mouse/touch position
-  let clientX: number
-  let clientY: number
-
-  if (event instanceof MouseEvent) {
-    clientX = event.clientX
-    clientY = event.clientY
-  } else {
-    clientX = event.touches[0].clientX
-    clientY = event.clientY
-  }
-
   const rect = button.getBoundingClientRect()
   const buttonCenterX = rect.left + rect.width / 2
   const buttonCenterY = rect.top + rect.height / 2
 
-  // Calculate distance from mouse to button center
-  const distanceX = clientX - buttonCenterX
-  const distanceY = clientY - buttonCenterY
-  const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY)
+  // Calculate random new position away from button center
+  const angle = Math.random() * Math.PI * 2
+  const moveDistance = 150
 
-  // If mouse is close enough, move the button away
-  if (distance < 150) {
-    // Calculate direction away from mouse
-    const angle = Math.atan2(distanceY, distanceX)
-    const moveDistance = 200
+  let newX = buttonCenterX + Math.cos(angle) * moveDistance - rect.width / 2
+  let newY = buttonCenterY + Math.sin(angle) * moveDistance - rect.height / 2
 
-    let newX = buttonCenterX - Math.cos(angle) * moveDistance - rect.width / 2
-    let newY = buttonCenterY - Math.sin(angle) * moveDistance - rect.height / 2
+  // Keep button within viewport bounds with padding
+  const padding = 20
+  const maxX = window.innerWidth - rect.width - padding
+  const maxY = window.innerHeight - rect.height - padding
 
-    // Keep button within viewport bounds
-    const maxX = window.innerWidth - rect.width - 20
-    const maxY = window.innerHeight - rect.height - 20
+  newX = Math.max(padding, Math.min(newX, maxX))
+  newY = Math.max(padding, Math.min(newY, maxY))
 
-    newX = Math.max(20, Math.min(newX, maxX))
-    newY = Math.max(20, Math.min(newY, maxY))
-
-    noButtonPosition.value = { x: newX, y: newY }
-  }
+  noButtonPosition.value = { x: newX, y: newY }
 }
 </script>
 
