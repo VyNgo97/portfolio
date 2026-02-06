@@ -185,7 +185,7 @@ const closeModal = () => {
   fireworks.value = []
 }
 
-const moveNoButton = (event: MouseEvent | TouchEvent) => {
+const moveNoButton = () => {
   if (accepted.value) return
 
   const button = noButton.value
